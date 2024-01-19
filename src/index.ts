@@ -32,9 +32,9 @@ manager
     console.log(`An error occurred: ${error}`);
   });
 
-/*
-setTimeout(() => {
-  console.log('Aborting all processes.');
-  abortController.abort();
-}, 10_000); // Aborts all processes after 10 seconds
-*/
+
+// setTimeout(() => {
+//   console.log('Aborting all processes.');
+//   abortController.abort();
+// }, 10_000); // Aborts all processes after 10 seconds
+

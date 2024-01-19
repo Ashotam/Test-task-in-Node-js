@@ -35,6 +35,20 @@ export class PredictedProcessesManager {
    *
    */
   public async runAll(signal?: AbortSignal): Promise<void> {
-    // TODO: Implement this.
+    if (signal?.aborted) {
+      throw new Error('Abort signal received before starting processes');
+    }
+
+    const promises = this._processes.map(process => process.run(signal));
+
+    if (signal) {
+      signal.addEventListener('abort', () => {
+        promises.forEach(p => p.catch(() => {})); // Catch errors to prevent unhandled rejections
+      });
+    }
+
+    await Promise.all(promises).catch(e => {
+      throw new Error(`Error running processes: ${e.message}`);
+    });
   }
 }
